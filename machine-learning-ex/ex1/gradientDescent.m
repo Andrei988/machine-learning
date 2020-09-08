@@ -31,7 +31,7 @@ for iter = 1:num_iters
 
     % Save the cost J in every iteration    
     J_history(iter) = computeCost(X, y, theta);
-    
+    disp(computeCost(X, y, theta))
 end
 
 fprintf('Theta computed from gradient descent: \n theta_1: %f\n theta_2: %f\n',theta(1),theta(2))
