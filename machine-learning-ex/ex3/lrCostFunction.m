@@ -33,13 +33,13 @@ grad = zeros(size(theta));
 %           grad = (unregularized gradient for logistic regression)
 %           temp = theta; 
 %           temp(1) = 0;   % because we don't add anything for j = 0  
-%           grad = grad + YOUR_CODE_HERE (using the temp variable)
-%
+%           grad = grad + YOUR_CODE_HERE (using the temp variab
 
 
-
-
-
+H = sigmoid(X * theta);
+J = (1/m)*(-y'*log(sigmoid(X*theta))-(1-y')*log(1-sigmoid(X*theta)))+(lambda/(2*m))*sum(theta(2:end).^2);
+grad = sum((H-y).*X)/m;
+grad(2:end) = grad(2:end)+lambda/m.*theta(2:end)';
 
 
 

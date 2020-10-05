@@ -1,4 +1,4 @@
-function [J grad] = nnCostFunction(nn_params, ...
+function [J, grad] = nnCostFunction(nn_params, ...
                                    input_layer_size, ...
                                    hidden_layer_size, ...
                                    num_labels, ...
@@ -62,22 +62,36 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+X = [ones(m,1), X]; 
+a1 = X;
+z2 = a1 * Theta1';
+a2 = sigmoid(z2);
+a2 = [ones(size(a2,1),1), a2];
+z3 = a2 * Theta2';
+a3 = sigmoid(z3);
+h_x = a3;
+y_Vec = (1:num_labels)==y;
+J = (1/m) * sum(sum((-y_Vec.*log(h_x))-((1-y_Vec).*log(1-h_x))));
+  
+D3 = a3 - y_Vec; % 5000 x 10
+D2 = (D3 * Theta2) .* [ones(size(z2,1),1) sigmoidGradient(z2)]; % 5000 x 26
+D2 = D2(:,2:end); 
+  
+Theta1_grad = (1/m) * (D2' * a1); % 25 x 401
+Theta2_grad = (1/m) * (D3' * a2); % 10 x 26
+  
+reg_term = (lambda/(2*m)) * (sum(sum(Theta1(:,2:end).^2)) + sum(sum(Theta2(:,2:end).^2))); 
+  
 
+J = J + reg_term;
+  
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Theta1_grt = (lambda/m) * [zeros(size(Theta1, 1), 1) Theta1(:,2:end)]; % 25 x 401
+Theta2_grt = (lambda/m) * [zeros(size(Theta2, 1), 1) Theta2(:,2:end)]; % 10 x 26
+  
+  %Adding regularization term to earlier calculated Theta_grad
+Theta1_grad = Theta1_grad + Theta1_grt;
+Theta2_grad = Theta2_grad + Theta2_grt;
 
 
 % -------------------------------------------------------------
