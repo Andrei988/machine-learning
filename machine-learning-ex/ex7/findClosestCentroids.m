@@ -22,7 +22,9 @@ idx = zeros(size(X,1), 1);
 %
 
 
-
+for i = 1:size(X,1),
+   [a idx(i)] = min(sum(((X(i,:) - centroids).*(X(i,:) - centroids)),2));
+end;   
 
 
 

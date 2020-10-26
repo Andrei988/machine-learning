@@ -29,7 +29,17 @@ for epsilon = min(pval):stepsize:max(pval)
 
 
 
+    predictions = (pval < epsilon);
+    ANOMALY = 1;
+    NORMAL = 0;
+    
+    n_tp = sum((predictions == ANOMALY) & (yval == ANOMALY));
+    n_fp = sum((predictions == ANOMALY) & (yval == NORMAL));
+    n_fn = sum((predictions == NORMAL) & (yval == ANOMALY));
 
+    precision = n_tp/(n_tp + n_fp);
+    recall = n_tp/(n_tp + n_fn);
+    F1 = 2*precision*recall/(precision+recall);
 
 
 

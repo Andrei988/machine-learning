@@ -16,6 +16,10 @@ sim = 0;
 %
 %
 
+n = -1*sum((x1-x2).^2);
+d = (2*sigma^2);
+
+sim = exp(n/d);
 
 
 

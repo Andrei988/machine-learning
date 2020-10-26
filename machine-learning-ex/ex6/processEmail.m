@@ -53,7 +53,7 @@ fprintf('\n==== Processed Email ====\n\n');
 
 % Process file
 l = 0;
-
+n = length(vocabList);
 while ~isempty(email_contents)
 
     % Tokenize and also get rid of any punctuation
@@ -68,7 +68,7 @@ while ~isempty(email_contents)
     % (the porterStemmer sometimes has issues, so we use a try catch block)
     try str = porterStemmer(strtrim(str)); 
     catch str = ''; continue;
-    end;
+    end
 
     % Skip the word if it is too short
     if length(str) < 1
@@ -99,7 +99,11 @@ while ~isempty(email_contents)
 
 
 
-
+  for i= 1:n
+        if strcmp(vocabList{i}, str)
+            word_indices = [word_indices; i];
+        end
+  end
 
 
 
